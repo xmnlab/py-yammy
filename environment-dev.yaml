@@ -3,6 +3,7 @@ channels:
     - conda-forge
 dependencies:
     - pip
+    - pillow
     - pysimplegui
     - pyyaml
     - flake8

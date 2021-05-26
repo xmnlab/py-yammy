@@ -1,30 +1,29 @@
-sprites:
-  astronaut:
-    front:
-      fps: 1
-      loop: true
-      images:
-        - front.png
-    back:
-      fps: 30
-      loop: true
-      images:
-        - back-0.png
-        - back-1.png
-        - back-2.png
-    side:
-      fps: 30
-      loop: true
-      images:
-        - side-0.png
-        - side-1.png
-        - side-2.png
-  asteroid:
-    small:
-      fps: 30
-      images:
-        - asteroid-small.png
-    big:
-      fps: 30
-      images:
-        - asteroid-big.png
+astronaut:
+  front:
+    fps: 1
+    loop: true
+    images:
+      - front.png
+  back:
+    fps: 30
+    loop: true
+    images:
+      - back-0.png
+      - back-1.png
+      - back-2.png
+  side:
+    fps: 30
+    loop: true
+    images:
+      - side-0.png
+      - side-1.png
+      - side-2.png
+asteroid:
+  small:
+    fps: 30
+    images:
+      - asteroid-small.png
+  big:
+    fps: 30
+    images:
+      - asteroid-big.png

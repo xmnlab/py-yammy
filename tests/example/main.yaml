@@ -2,4 +2,5 @@ name: mygame
 layout:
   # auto_size: true
   width: 640  # px
-  height: 480  # px
+  height: 960  # px
+  background: "sprites/background/background-8bits.jpg"
