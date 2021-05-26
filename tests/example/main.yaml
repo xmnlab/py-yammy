@@ -1,0 +1,5 @@
+name: mygame
+layout:
+  # auto_size: true
+  width: 640  # px
+  height: 480  # px

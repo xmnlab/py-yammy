@@ -1,0 +1,15 @@
+name: pyge-dev
+channels:
+    - conda-forge
+dependencies:
+    - pip
+    - pysimplegui
+    - pyyaml
+    - flake8
+    - coverage
+    - sphinx
+    - twine
+    - pytest
+    - pytest-runner
+    - pytest-cov
+    - pre-commit
