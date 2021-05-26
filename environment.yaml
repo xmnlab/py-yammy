@@ -2,7 +2,6 @@ channels:
   - conda-forge
 dependencies:
   - pip
-  - pillow
   - pyyaml
   -pip:
     - pygame

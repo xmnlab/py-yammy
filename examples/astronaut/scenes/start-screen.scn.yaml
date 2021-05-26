@@ -1,0 +1,15 @@
+layout:
+  elements:
+    - name: start_button
+      type: button
+      text: Start Game
+      font:
+        # family: serif
+        source: ARCADECLASSIC.TTF
+        size: 30  # px
+      width: 100  # px
+      height: 50  # px
+      x: 100  # px
+      y: 500  # px
+      events:
+        click:

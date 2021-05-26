@@ -1,17 +1,18 @@
 name: pyge-dev
 channels:
-    - conda-forge
+  - conda-forge
 dependencies:
-    - pip
-    - pillow
-    - pyyaml
-    - flake8
-    - coverage
-    - sphinx
-    - twine
-    - pytest
-    - pytest-runner
-    - pytest-cov
-    - pre-commit
-    - pip:
-        - pygame
+  - pyyaml
+  # dev
+  - black
+  - pip
+  - flake8
+  - coverage
+  - sphinx
+  - twine
+  - pytest
+  - pytest-runner
+  - pytest-cov
+  - pre-commit
+  - pip:
+    - pygame
