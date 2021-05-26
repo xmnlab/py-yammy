@@ -4,3 +4,7 @@ layout:
   width: 640  # px
   height: 960  # px
   background: "sprites/background/background-8bits.jpg"
+  # Icons made by https://www.freepik.com"  from https://www.flaticon.com/
+  # https://www.flaticon.com/free-icon/native-american_3093925?term=native&page=1&position=5&page=1&position=5&related_id=3093925&origin=search
+  # use .ico for windows and .png for linux
+  icon: "native-american.png"

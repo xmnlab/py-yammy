@@ -74,10 +74,20 @@ class PyGE:
             title=title,
             layout=content,
             margins=(0, 0),
+            background_color="#000000",
         )
 
         if not layout_auto_size:
             params["size"] = layout_size
+
+
+        if layout.get("icon"):
+            params["icon"] = str(
+                self.paths["assets"] / "media" /
+                "images" / layout.get("icon")
+            )
+
+        # print(params)
 
         window = sg.Window(**params)
 
