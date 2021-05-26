@@ -4,7 +4,6 @@ channels:
 dependencies:
     - pip
     - pillow
-    - pysimplegui
     - pyyaml
     - flake8
     - coverage
@@ -14,3 +13,5 @@ dependencies:
     - pytest-runner
     - pytest-cov
     - pre-commit
+    - pip:
+        - pygame

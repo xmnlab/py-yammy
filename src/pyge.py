@@ -2,8 +2,10 @@
 import io
 import base64
 from pathlib import Path
+import sys
+import time
 
-import PySimpleGUI as sg
+import pygame
 import yaml
 import PIL.Image
 
@@ -53,48 +55,37 @@ class PyGE:
         with open(self.paths["project"] / "sprites.yaml", "r") as f:
             self.config["sprites"] = yaml.load(f)
 
-    def start(self):
+        self.clock_tick_rate = 20
+        self.clock = pygame.time.Clock()
+
         layout = self.config["main"].get("layout", {})
         title = self.config["main"].get("name", "A PyGE game!")
-        layout_auto_size = layout.get("auto_size", False)
-
-        if not layout_auto_size:
-            layout_size = (
-                layout.get("width", 640),
-                layout.get("height", 480),
-            )
-
-        content = []
-
-        if layout.get("background"):
-            filename = str(self.paths["assets"] / layout.get("background"))
-            content.append([sg.Image(data=convert_to_bytes(filename))])
-
-        params = dict(
-            title=title,
-            layout=content,
-            margins=(0, 0),
-            background_color="#000000",
+        layout_size = (
+            layout.get("width", 640),
+            layout.get("height", 480),
         )
 
-        if not layout_auto_size:
-            params["size"] = layout_size
+        self.screen = pygame.display.set_mode(layout_size)
+
+        icon_filename =  str(
+            self.paths["assets"] / "media" /
+            "images" / layout.get("icon")
+        )
+        icon_image = pygame.image.load(icon_filename)
+        pygame.display.set_icon(icon_image)
 
 
-        if layout.get("icon"):
-            params["icon"] = str(
-                self.paths["assets"] / "media" /
-                "images" / layout.get("icon")
-            )
+        # TODO: set a default image
+        background_filename = str(self.paths["assets"] / layout.get("background"))
+        background_image = pygame.image.load(background_filename).convert()
 
-        # print(params)
+        self.screen.blit(background_image, [0, 0])
 
-        window = sg.Window(**params)
-
+    def start(self):
         while True:
-            event, values = window.read()
-            if event == sg.WIN_CLOSED or event == 'Cancel': # if user closes window or clicks cancel
-                break
-            print('You entered ', values[0])
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    sys.exit()
 
-        window.close()
+            pygame.display.flip()
+            self.clock.tick(self.clock_tick_rate)
