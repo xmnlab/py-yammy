@@ -43,6 +43,9 @@ def convert_to_bytes(file_or_bytes, resize=None):
 
 class PyGE:
     paths = {}
+    config = {}
+    clock_tick_rate = 20
+
     def __init__(self, project_path: Path):
         self.paths["project"] = project_path
         self.paths["assets"] = self.paths["project"] / "assets"
@@ -54,6 +57,9 @@ class PyGE:
 
         with open(self.paths["project"] / "sprites.yaml", "r") as f:
             self.config["sprites"] = yaml.load(f)
+
+        with open(self.paths["project"] / "scenes.yaml", "r") as f:
+            self.config["scenes"] = yaml.load(f)
 
         self.clock_tick_rate = 20
         self.clock = pygame.time.Clock()
@@ -67,25 +73,44 @@ class PyGE:
 
         self.screen = pygame.display.set_mode(layout_size)
 
+        # TODO: set a default image
         icon_filename =  str(
-            self.paths["assets"] / "media" /
-            "images" / layout.get("icon")
+            self.paths["assets"] / "images" / layout.get("icon")
         )
         icon_image = pygame.image.load(icon_filename)
         pygame.display.set_icon(icon_image)
 
 
-        # TODO: set a default image
-        background_filename = str(self.paths["assets"] / layout.get("background"))
-        background_image = pygame.image.load(background_filename).convert()
-
-        self.screen.blit(background_image, [0, 0])
-
     def start(self):
+        next_scene_name = self.config["main"]["initial-scene"]
+        scene = None
+        timer = None
+
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     sys.exit()
 
+            if timer is not None and timer <= 0:
+                next_scene_name = scene["next-scene"]
+                scene = None
+
+            if scene is None:
+                scene = self.config["scenes"][next_scene_name]
+                timer = None
+
+                if not scene.get("loop", False):
+                    # if "loop" is false or not define, "time" should be given
+                    timer = scene.get("time")
+
+
+            if scene.get("background"):
+                background_filename = str(self.paths["assets"] / scene.get("background"))
+                background_image = pygame.image.load(background_filename).convert()
+                self.screen.blit(background_image, [0, 0])
+
             pygame.display.flip()
             self.clock.tick(self.clock_tick_rate)
+
+            if timer is not None:
+                timer -= self.clock_tick_rate/200
