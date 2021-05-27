@@ -1,6 +1,7 @@
 """Main module template with example functions."""
 import io
 import base64
+import os
 from pathlib import Path
 import sys
 import time
@@ -25,6 +26,8 @@ class PyGE:
     screen = None
 
     def __init__(self, project_path: Path):
+        os.environ["PYGE_PROJECT_PATH"] = str(project_path)
+
         self.paths["project"] = project_path
         self.paths["assets"] = self.paths["project"] / "assets"
         self.paths["scenes"] = self.paths["project"] / "scenes"
