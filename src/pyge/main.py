@@ -65,6 +65,7 @@ class PyGE:
         pygame.mixer.init()
 
     def start(self):
+        # necessary for using custom fonts
         pygame.init()
 
         self.next_scene_name = self.config["main"]["initial-scene"]

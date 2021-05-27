@@ -12,6 +12,7 @@ class Layout:
         self.parent = parent
         self.background = Background(self.parent)
         self.elements = {}
+        self.element_type = {"button": Button, "text": Text}
 
     def new(self):
         self.elements = {}
@@ -24,20 +25,17 @@ class Layout:
 
         for item in expansion.get("layout", {}).get("elements", {}):
             name = item["name"]
-            if name in self.elements:
-                ...
+            class_element = self.element_type.get(item.get("type"))
 
-            if item["type"] == "button":
-                # it should use the font from font/source or font/family
+            if not class_element:
+                continue
 
-                self.elements[name] = Button(
-                    item["text"],
-                    (item["x"], item["y"]),
-                    style=item.get("style"),
-                )
-                self.elements[name].show(self.parent.screen)
+            self.elements[name] = class_element(item)
+            self.elements[name].show(self.parent.screen)
+
+            for k, v in item.get("events", {}).items():
                 self.parent.scenes.events_trigger.append(
-                    self.elements[name].click
+                    getattr(self.elements[name], k)
                 )
 
 
@@ -70,7 +68,9 @@ class Font:
 
         if style.get("font-source"):
             font_class = pygame.font.Font
-            font_source = str(settings.get_path("fonts") / style["font-source"])
+            font_source = str(
+                settings.get_path("fonts") / style["font-source"]
+            )
         elif style.get("font-family"):
             font_class = pygame.font.SysFont
             font_source = style["font-family"]
@@ -80,20 +80,21 @@ class Font:
 
         return font_class(font_source, font_size)
 
+
 class Button:
     """Create a button, then blit the surface in the while loop"""
 
-    def __init__(self, text, pos, feedback="", style={}):
-        self.x, self.y = pos
+    def __init__(self, config):
+        self.x = config.get("x", 0)
+        self.y = config.get("y", 0)
+
+        self.events = config.get("events", {})
 
         # font
-        self.font = Font.get(style)
+        self.font = Font.get(config.get("style", {}))
 
-        if feedback == "":
-            self.feedback = "text"
-        else:
-            self.feedback = feedback
-        self.change_text(text, "black")
+        self.feedback = config.get("feedback", "text")
+        self.change_text(config.get("text", "Button"), "black")
 
     def change_text(self, text, bg="black"):
         """Change the text whe you click"""
@@ -107,10 +108,47 @@ class Button:
     def show(self, screen):
         screen.blit(self.surface, (self.x, self.y))
 
-    def click(self, event):
+    def click(self, event, parent):
         x, y = pygame.mouse.get_pos()
         if event.type == pygame.MOUSEBUTTONDOWN:
             if pygame.mouse.get_pressed()[0]:
                 if self.rect.collidepoint(x, y):
-                    self.change_text(str(self.feedback), bg="red")
-                print("button clicked")
+                    eval(f'parent.{self.events["click"]}')
+
+
+class Text:
+    """Create a text, then blit the surface in the while loop"""
+
+    def __init__(self, config):
+        self.x = config.get("x", 0)
+        self.y = config.get("y", 0)
+
+        self.events = config.get("events", {})
+
+        # font
+        self.font = Font.get(config.get("style", {}))
+
+        self.feedback = config.get("feedback", "text")
+        self.change_text(config.get("text", "Button"), "black")
+
+    def change_text(self, text, bg="black"):
+        """Change the text whe you click"""
+        self.text = self.font.render(text, 1, pygame.Color("White"))
+        self.size = self.text.get_size()
+        self.surface = pygame.Surface(self.size)
+        self.surface.fill(bg)
+        self.surface.blit(self.text, (0, 0))
+        self.rect = pygame.Rect(self.x, self.y, self.size[0], self.size[1])
+
+    def show(self, screen):
+        screen.blit(self.surface, (self.x, self.y))
+
+    def click(self, event, parent):
+        if "click" not in self.events:
+            return
+
+        x, y = pygame.mouse.get_pos()
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if pygame.mouse.get_pressed()[0]:
+                if self.rect.collidepoint(x, y):
+                    eval(f'parent.{self.events["click"]}')

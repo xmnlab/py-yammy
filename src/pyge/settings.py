@@ -1,6 +1,7 @@
 from pathlib import Path
 import os
 
+
 def get_path(key):
     PATHS = {}
 

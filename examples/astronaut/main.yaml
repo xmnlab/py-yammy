@@ -1,4 +1,4 @@
-name: mygame
+name: astronaut
 layout:
   dimensions: 2  # 2D
   # auto_size: true

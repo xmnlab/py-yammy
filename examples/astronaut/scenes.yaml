@@ -23,6 +23,7 @@ game-play:
   soundtrack: null
   background: "sprites/background/background-8bits.jpg"
   loop: true
+  expand: true
 end-over:
   blank: false
   soundtrack: null

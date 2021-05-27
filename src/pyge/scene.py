@@ -15,19 +15,26 @@ class Scenes:
         self.soundboard = SoundBoard(self.parent)
         self.layout = Layout(self.parent)
         self.events_trigger = []
+        self.current_scene_name = ""
+
+    def new(self):
+        self.layout.new()
+        self.events_trigger = []
+
+    def goto(self, scene_name):
+        self.new()
+        self.current_scene_name = scene_name
+        self.parent.scene = self.config[scene_name]
+
+        if self.parent.scene.get("expand", False):
+            filepath = self.parent.paths["scenes"] / f"{scene_name}.scn.yaml"
+            self.parent.scene["expansion"] = read_config(filepath)
 
     def run(self):
         self.timer.check_ending()
 
         if self.parent.scene is None:
-            self.parent.scene = self.config[self.parent.next_scene_name]
-
-            if self.parent.scene.get("expand", False):
-                filepath = (
-                    self.parent.paths["scenes"]
-                    / f"{self.parent.next_scene_name}.scn.yaml"
-                )
-                self.parent.scene["expansion"] = read_config(filepath)
+            self.goto(self.parent.next_scene_name)
 
         # soundtrack
         self.soundboard.run()
@@ -46,4 +53,4 @@ class Scenes:
 
     def events(self, event):
         for e in self.events_trigger:
-            e(event)
+            e(event, self.parent)

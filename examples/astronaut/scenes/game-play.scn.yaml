@@ -1,8 +1,8 @@
 layout:
   elements:
-    - name: start_button
-      type: button
-      text: Start Game
+    - name: score
+      type: text
+      text: "Score {score}"
       style:
         # family: serif
         font-source: ARCADECLASSIC.TTF
@@ -10,6 +10,4 @@ layout:
       width: 300  # px
       height: 100  # px
       x: 150  # px
-      y: 750  # px
-      events:
-        click: scenes.goto("game-play")
+      y: 50  # px
