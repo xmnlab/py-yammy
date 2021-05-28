@@ -3,6 +3,7 @@ from pathlib import Path
 import pygame
 
 from pyge import settings
+from pyge.settings import get_path
 
 
 class Layout:
@@ -48,7 +49,7 @@ class Background:
     def show(self):
         if self.parent.scene.get("background"):
             background_filename = str(
-                self.parent.paths["assets"]
+                get_path("/assets")
                 / self.parent.scene.get("background")
             )
             background_image = pygame.image.load(background_filename).convert()
@@ -69,7 +70,7 @@ class Font:
         if style.get("font-source"):
             font_class = pygame.font.Font
             font_source = str(
-                settings.get_path("fonts") / style["font-source"]
+                settings.get_path("/assets/fonts") / style["font-source"]
             )
         elif style.get("font-family"):
             font_class = pygame.font.SysFont

@@ -1,5 +1,7 @@
 import pygame
 
+from pyge.settings import get_path
+
 
 class SoundBoard:
     parent = None
@@ -29,8 +31,7 @@ class SoundTrack:
         self.active = False
         if self.parent.scene.get("soundtrack"):
             soundtrack_filename = str(
-                self.parent.paths["assets"]
-                / "audios"
+                get_path("/assets/audios")
                 / self.parent.scene.get("soundtrack")
             )
             pygame.mixer.music.load(soundtrack_filename)

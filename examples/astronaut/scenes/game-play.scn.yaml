@@ -18,7 +18,7 @@ attributes:
     value: 0
 
 methods:
-  update-score: lambda: score +=1
+  update-score: "lambda: score +=1"
 
 triggers:
   update-score:

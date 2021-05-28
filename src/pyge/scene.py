@@ -5,6 +5,7 @@ from pyge.timer import Timer
 from pyge.sound import SoundBoard
 from pyge.layout import Layout
 from pyge.utils import read_config
+from pyge.settings import get_path
 
 
 class Scenes:
@@ -27,7 +28,7 @@ class Scenes:
         self.parent.scene = self.config[scene_name]
 
         if self.parent.scene.get("expand", False):
-            filepath = self.parent.paths["scenes"] / f"{scene_name}.scn.yaml"
+            filepath = get_path("/scenes") / f"{scene_name}.scn.yaml"
             self.parent.scene["expansion"] = read_config(filepath)
 
     def run(self):

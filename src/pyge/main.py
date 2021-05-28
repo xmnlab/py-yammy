@@ -1,6 +1,7 @@
 """Main module template with example functions."""
 import io
 import base64
+from glob import glob
 import os
 from pathlib import Path
 import sys
@@ -11,10 +12,10 @@ import yaml
 
 from pyge.scene import Scenes
 from pyge.utils import read_config
+from pyge.settings import get_path
 
 
 class PyGE:
-    paths = {}
     config = {}
     clock_tick_rate = 20
 
@@ -28,19 +29,15 @@ class PyGE:
     def __init__(self, project_path: Path):
         os.environ["PYGE_PROJECT_PATH"] = str(project_path)
 
-        self.paths["project"] = project_path
-        self.paths["assets"] = self.paths["project"] / "assets"
-        self.paths["scenes"] = self.paths["project"] / "scenes"
-
         self.config = {}
+        self.config["sprites"] = {}
 
-        self.config["main"] = read_config(self.paths["project"] / "main.yaml")
-        self.config["sprites"] = read_config(
-            self.paths["project"] / "sprites.yaml"
-        )
-        self.config["scenes"] = read_config(
-            self.paths["project"] / "scenes.yaml"
-        )
+        self.config["main"] = read_config(get_path("/") / "main.yaml")
+        self.config["scenes"] = read_config(get_path("/") / "scenes.yaml")
+
+        for f in glob(str(get_path("/sprites") / "*.spr.yaml")):
+            _sprite = read_config(f)
+            self.config["sprites"][_sprite["name"]] = _sprite
 
         self.clock_tick_rate = 20
         self.clock = pygame.time.Clock()
@@ -56,7 +53,7 @@ class PyGE:
 
         # TODO: set a default image
         icon_filename = str(
-            self.paths["assets"] / "images" / layout.get("icon")
+            get_path("/assets/images") / layout.get("icon")
         )
         icon_image = pygame.image.load(icon_filename)
         pygame.display.set_icon(icon_image)
