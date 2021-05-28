@@ -11,3 +11,29 @@ layout:
       height: 100  # px
       x: 150  # px
       y: 50  # px
+
+attributes:
+  score:
+    type: int
+    value: 0
+
+methods:
+  update-score: lambda: score +=1
+
+triggers:
+  update-score:
+    time: 1  # sec
+    method: update-score
+
+sprites:
+  - type: astronaut
+    variables:
+      pos-x:
+        type: int
+        value: 0
+      pos-y:
+        type: int
+        value: 0
+      speed:
+        type: int
+        value: 10

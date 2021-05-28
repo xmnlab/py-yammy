@@ -1,0 +1,10 @@
+name: asteroid
+animations:
+  small:
+    fps: 30
+    images:
+      - asteroid-small.png
+  big:
+    fps: 30
+    images:
+      - asteroid-big.png
