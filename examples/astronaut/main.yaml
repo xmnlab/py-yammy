@@ -1,4 +1,5 @@
 name: astronaut
+title: Astronaut
 layout:
   dimensions: 2  # 2D
   # auto_size: true

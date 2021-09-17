@@ -8,7 +8,7 @@ class SpritesControl:
     @classmethod
     def get_sprites(cls, something):
         sprites = {}
-        for f in glob(str(get_path("/sprites") / "*.spr.yaml")):
+        for f in glob.glob(str(get_path("/sprites") / "*.spr.yaml")):
             sprite = read_config(f)
             sprites[sprite["name"]] = sprite
 

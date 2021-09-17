@@ -13,7 +13,9 @@ from yammy.utils import read_config
 class Yammy:
     config = {}
     scenes_control: Optional[ScenesControl] = None
+    # pygame screen
     screen = None
+    status: str = "active"
 
     def __init__(self, project_path: Path):
         os.environ["YAMMY_PROJECT_PATH"] = str(project_path)
@@ -26,6 +28,7 @@ class Yammy:
         self.clock = pygame.time.Clock()
 
         layout = self.config.get("layout", {})
+        title = self.config.get("title", "A Yammy game!")
 
         layout_size = (
             layout.get("width", 640),
@@ -37,21 +40,26 @@ class Yammy:
         # TODO: set a default image
         icon_filename = str(get_path("/assets/images") / layout.get("icon"))
         icon_image = pygame.image.load(icon_filename)
+
         pygame.display.set_icon(icon_image)
+        pygame.display.set_caption(title)
 
         # initialize mixer
         pygame.mixer.init()
+        self.status = "active"
 
     def start(self):
         # necessary for using custom fonts
         pygame.init()
 
-        self.next_scene_name = self.config["initial-scene"]
-
-        while True:
+        while self.status == "active":
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     sys.exit()
                 self.scenes_control.events(event)
 
             self.scenes_control.run()
+
+        pygame.display.quit()
+        pygame.quit()
+        sys.exit()

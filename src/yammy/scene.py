@@ -17,7 +17,6 @@ class ScenesControl:
     config: dict = {}
     scenes: list = []
     current_scene: Optional[Scene] = None
-    next_scene: Optional[Scene] = None
     timer: Optional[Timer] = None
 
     def __init__(self, game):
@@ -36,7 +35,14 @@ class ScenesControl:
 
     def run(self):
         if self.current_scene.status == "finished":
-            self.goto(self.game.next_scene_name)
+            next_scene_name = self.current_scene.config.get("next_scene_name")
+            if not next_scene_name:
+                self.game.status = "finished"
+                return
+
+            self.goto(next_scene_name)
+
+        print(self.current_scene.config["name"])
 
         self.current_scene.timer.check_ending()
 

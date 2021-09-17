@@ -1,9 +1,9 @@
-end-over:
-  blank: false
-  soundtrack: null
-  loop: false
-  time: 5  # s
-  next-scene: start-screen
-  sprites:
-    - name: asteroid
-    - name: astronaut
+name: end-over
+blank: false
+soundtrack: null
+loop: false
+time: 5  # s
+next-scene: start-screen
+sprites:
+  - name: asteroid
+  - name: astronaut

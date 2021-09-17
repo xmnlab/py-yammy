@@ -1,45 +1,45 @@
-game-play:
-  blank: true
-  soundtrack: null
-  background: "sprites/background/background-8bits.jpg"
-  loop: true
-  
-  layout:
-    elements:
-      - name: score
-        type: text
-        text: "Score {score}"
-        style:
-          # family: serif
-          font-source: ARCADECLASSIC.TTF
-          font-size: 70  # px
-        width: 300  # px
-        height: 100  # px
-        x: 150  # px
-        y: 50  # px
+name: game-play
+blank: true
+soundtrack: null
+background: "sprites/background/background-8bits.jpg"
+loop: true
 
-  attributes:
-    score:
-      type: int
-      value: 0
+layout:
+  elements:
+    - name: score
+      type: text
+      text: "Score {score}"
+      style:
+        # family: serif
+        font-source: ARCADECLASSIC.TTF
+        font-size: 70  # px
+      width: 300  # px
+      height: 100  # px
+      x: 150  # px
+      y: 50  # px
 
-  methods:
-    update-score: "lambda: score +=1"
+attributes:
+  score:
+    type: int
+    value: 0
 
-  triggers:
-    update-score:
-      time: 1  # sec
-      method: update-score
+methods:
+  update-score: "lambda: score +=1"
 
-  sprites:
-    - type: astronaut
-      variables:
-        pos-x:
-          type: int
-          value: 0
-        pos-y:
-          type: int
-          value: 0
-        speed:
-          type: int
-          value: 10
+triggers:
+  update-score:
+    time: 1  # sec
+    method: update-score
+
+sprites:
+  - type: astronaut
+    variables:
+      pos-x:
+        type: int
+        value: 0
+      pos-y:
+        type: int
+        value: 0
+      speed:
+        type: int
+        value: 10
