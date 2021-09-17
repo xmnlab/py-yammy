@@ -1,7 +1,4 @@
-from pathlib import Path
-
 import pygame
-
 from yammy import settings
 from yammy.settings import get_path
 
@@ -19,12 +16,9 @@ class Layout:
         self.elements = {}
 
     def update(self):
-        expansion = self.parent.scene.get("expansion")
+        config = self.parent.scenes_control.current_scene.config
 
-        if not expansion:
-            return
-
-        for item in expansion.get("layout", {}).get("elements", {}):
+        for item in config.get("layout", {}).get("elements", {}):
             name = item["name"]
             class_element = self.element_type.get(item.get("type"))
 
@@ -35,7 +29,7 @@ class Layout:
             self.elements[name].show(self.parent.screen)
 
             for k, v in item.get("events", {}).items():
-                self.parent.scenes.events_trigger.append(
+                self.parent.scenes_control.current_scene.events_trigger.append(
                     getattr(self.elements[name], k)
                 )
 
@@ -47,10 +41,12 @@ class Background:
         self.parent = parent
 
     def show(self):
-        if self.parent.scene.get("background"):
+        if self.parent.scenes_control.current_scene.config.get("background"):
             background_filename = str(
                 get_path("/assets")
-                / self.parent.scene.get("background")
+                / self.parent.scenes_control.current_scene.config.get(
+                    "background"
+                )
             )
             background_image = pygame.image.load(background_filename).convert()
             self.parent.screen.blit(background_image, [0, 0])

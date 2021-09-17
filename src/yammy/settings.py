@@ -1,12 +1,12 @@
-from pathlib import Path
 import os
+from pathlib import Path
 
 
 def get_path(key):
     PATHS = {}
 
-    if os.environ.get("PYGE_PROJECT_PATH"):
-        PATHS["/"] = Path(os.environ.get("PYGE_PROJECT_PATH"))
+    if os.environ.get("YAMMY_PROJECT_PATH"):
+        PATHS["/"] = Path(os.environ.get("YAMMY_PROJECT_PATH"))
         PATHS["/scenes"] = PATHS["/"] / "scenes"
         PATHS["/sprites"] = PATHS["/"] / "sprites"
         PATHS["/assets"] = PATHS["/"] / "assets"

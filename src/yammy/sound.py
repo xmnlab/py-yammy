@@ -1,5 +1,4 @@
 import pygame
-
 from yammy.settings import get_path
 
 
@@ -29,10 +28,12 @@ class SoundTrack:
             return
 
         self.active = False
-        if self.parent.scene.get("soundtrack"):
+        if self.parent.scenes_control.current_scene.config.get("soundtrack"):
             soundtrack_filename = str(
                 get_path("/assets/audios")
-                / self.parent.scene.get("soundtrack")
+                / self.parent.scenes_control.current_scene.config.get(
+                    "soundtrack"
+                )
             )
             pygame.mixer.music.load(soundtrack_filename)
             self.active = True

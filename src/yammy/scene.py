@@ -1,57 +1,79 @@
+from __future__ import annotations
+
+import glob
+import os
+from typing import Optional
+
 import pygame
-
-from yammy import layout
-from yammy.timer import Timer
-from yammy.sound import SoundBoard
 from yammy.layout import Layout
-from yammy.utils import read_config
 from yammy.settings import get_path
+from yammy.sound import SoundBoard
+from yammy.sprite import SpritesControl
+from yammy.timer import Timer
+from yammy.utils import read_config
 
 
-class Scenes:
-    def __init__(self, parent):
-        self.parent = parent
-        self.config = parent.config["scenes"]
-        self.timer = Timer(self.parent)
-        self.soundboard = SoundBoard(self.parent)
-        self.layout = Layout(self.parent)
-        self.events_trigger = []
-        self.current_scene_name = ""
+class ScenesControl:
+    config: dict = {}
+    scenes: list = []
+    current_scene: Optional[Scene] = None
+    next_scene: Optional[Scene] = None
+    timer: Optional[Timer] = None
 
-    def new(self):
-        self.layout.new()
-        self.events_trigger = []
+    def __init__(self, game):
+        self.game = game
+        self.new(self.game.config["initial-scene"])
+
+        for filepath in glob.glob(str(get_path("/scenes") / "*.scn.yaml")):
+            name = filepath.split(os.sep)[-1].replace(".scn.yaml", "")
+            self.config[name] = read_config(filepath)
+
+    def new(self, scene_name):
+        self.current_scene = Scene(self.game, scene_name)
 
     def goto(self, scene_name):
-        self.new()
-        self.current_scene_name = scene_name
-        self.parent.scene = self.config[scene_name]
-
-        if self.parent.scene.get("expand", False):
-            filepath = get_path("/scenes") / f"{scene_name}.scn.yaml"
-            self.parent.scene["expansion"] = read_config(filepath)
+        self.new(self.game, scene_name)
 
     def run(self):
-        self.timer.check_ending()
+        if self.current_scene.status == "finished":
+            self.goto(self.game.next_scene_name)
 
-        if self.parent.scene is None:
-            self.goto(self.parent.next_scene_name)
+        self.current_scene.timer.check_ending()
 
         # soundtrack
-        self.soundboard.run()
+        self.current_scene.soundboard.run()
 
         # background
         # TODO: Show just when the background need to be updated
-        self.layout.background.show()
-        self.layout.update()
+        self.current_scene.layout.background.show()
+        self.current_scene.layout.update()
 
-        self.timer.check_begining()
+        self.current_scene.timer.check_begining()
 
         pygame.display.update()
 
-        self.parent.clock.tick(self.parent.clock_tick_rate)
-        self.timer.update_counter()
+        self.game.clock.tick(self.game.config.get("clock-tick-rate"))
+        self.current_scene.timer.update_counter()
 
     def events(self, event):
-        for e in self.events_trigger:
-            e(event, self.parent)
+        for e in self.current_scene.events_trigger:
+            e(event, self.game)
+
+
+class Scene:
+
+    config: dict = {}
+    status = "active"  # options: active, finished
+
+    def __init__(self, game, name):
+        self.game = game
+        self.timer = Timer(self)
+        self.soundboard = SoundBoard(self.game)
+        self.layout = Layout(self.game)
+        self.events_trigger = []
+        self.sprites = SpritesControl.get_sprites(self.game)
+
+        self.current_name = name
+
+        filepath = get_path("/scenes") / f"{name}.scn.yaml"
+        self.config = read_config(filepath)

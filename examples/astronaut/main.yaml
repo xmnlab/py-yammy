@@ -10,3 +10,4 @@ layout:
   # use .ico for windows and .png for linux
   icon: "native-american.png"
 initial-scene: game-engines
+clock-tick-rate: 20

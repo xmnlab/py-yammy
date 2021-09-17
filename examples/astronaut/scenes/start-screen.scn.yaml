@@ -1,15 +1,20 @@
-layout:
-  elements:
-    - name: start_button
-      type: button
-      text: Start Game
-      style:
-        # family: serif
-        font-source: ARCADECLASSIC.TTF
-        font-size: 70  # px
-      width: 300  # px
-      height: 100  # px
-      x: 150  # px
-      y: 750  # px
-      events:
-        click: scenes.goto("game-play")
+start-screen:
+  blank: true
+  soundtrack: "sound-background.ogg"
+  background: "sprites/background/start-game.jpg"
+  loop: true
+  layout:
+    elements:
+      - name: start_button
+        type: button
+        text: Start Game
+        style:
+          # family: serif
+          font-source: ARCADECLASSIC.TTF
+          font-size: 70  # px
+        width: 300  # px
+        height: 100  # px
+        x: 150  # px
+        y: 750  # px
+        events:
+          click: scenes.goto("game-play")

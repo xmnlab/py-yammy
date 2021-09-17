@@ -1,0 +1,7 @@
+game-engines:
+  blank: true
+  soundtrack: null
+  background: "sprites/background/game-engines.jpg"
+  time: 2  # s
+  loop: false
+  next-scene: partnerships
