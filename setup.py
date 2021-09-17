@@ -24,6 +24,7 @@ with open('requirements_dev.txt', 'r') as f:
 dev_requirements += requirements
 
 setup(
+    name='yammy',
     author="Ivan Ogasawara",
     author_email='ivan.ogasawara@gmail.com',
     classifiers=[
@@ -42,15 +43,14 @@ setup(
     license="BSD license",
     long_description=readme + '\n\n' + history,
     include_package_data=True,
-    keywords='pyge',
-    name='pyge',
+    keywords='yammy',
     packages=find_packages(where='src'),
     package_dir={'': 'src'},
     # py_modules=[splitext(basename(path))[0] for path in glob('src/*.py')],
     setup_requires=setup_requirements,
     test_suite='tests',
     tests_require=test_requirements,
-    url='https://github.com/xmnlab/pyge',
+    url='https://github.com/xmnlab/yammy',
     version='0.1.0',
     zip_safe=False,
 )

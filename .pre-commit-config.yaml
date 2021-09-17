@@ -27,5 +27,4 @@ repos:
       rev: 'master'
       hooks:
       -   id: mypy
-          files: pyge/
-
+          files: yammy/

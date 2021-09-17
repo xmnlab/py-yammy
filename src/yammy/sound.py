@@ -1,6 +1,6 @@
 import pygame
 
-from pyge.settings import get_path
+from yammy.settings import get_path
 
 
 class SoundBoard:

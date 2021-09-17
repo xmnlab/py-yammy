@@ -10,12 +10,12 @@ import time
 import pygame
 import yaml
 
-from pyge.scene import Scenes
-from pyge.utils import read_config
-from pyge.settings import get_path
+from yammy.scene import Scenes
+from yammy.utils import read_config
+from yammy.settings import get_path
 
 
-class PyGE:
+class Yammy:
     config = {}
     clock_tick_rate = 20
 
@@ -43,7 +43,7 @@ class PyGE:
         self.clock = pygame.time.Clock()
 
         layout = self.config["main"].get("layout", {})
-        title = self.config["main"].get("name", "A PyGE game!")
+        title = self.config["main"].get("name", "A Yammy game!")
         layout_size = (
             layout.get("width", 640),
             layout.get("height", 480),

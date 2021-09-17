@@ -1,7 +1,7 @@
 from pathlib import Path
-import pyge
-from pyge import PyGE
+import yammy
+from yammy import Yammy
 
 if __name__ == "__main__":
-    pyge = PyGE(Path(__file__).parent)
-    pyge.start()
+    yammy = Yammy(Path(__file__).parent)
+    yammy.start()

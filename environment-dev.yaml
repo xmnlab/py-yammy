@@ -1,4 +1,4 @@
-name: pyge-dev
+name: yammy-dev
 channels:
   - conda-forge
 dependencies:

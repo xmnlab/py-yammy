@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-"""Tests for `pyge` package."""
+"""Tests for `yammy` package."""
 
 import random
 
 import pytest
 
-from pyge import pyge
+from yammy import yammy

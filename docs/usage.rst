@@ -4,4 +4,4 @@ Usage
 
 To use Python Game Engine in a project::
 
-    import pyge
+    import yammy

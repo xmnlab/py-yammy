@@ -3,17 +3,17 @@ Python Game Engine
 ==================
 
 
-.. image:: https://img.shields.io/pypi/v/pyge.svg
-        :target: https://pypi.python.org/pypi/pyge
+.. image:: https://img.shields.io/pypi/v/yammy.svg
+        :target: https://pypi.python.org/pypi/yammy
 
-.. image:: https://img.shields.io/travis/xmnlab/pyge.svg
-        :target: https://travis-ci.org/xmnlab/pyge
+.. image:: https://img.shields.io/travis/xmnlab/yammy.svg
+        :target: https://travis-ci.org/xmnlab/yammy
 
-.. image:: https://codecov.io/gh/xmnlab/pyge/branch/master/graph/badge.svg
-        :target: https://codecov.io/gh/xmnlab/pyge
+.. image:: https://codecov.io/gh/xmnlab/yammy/branch/master/graph/badge.svg
+        :target: https://codecov.io/gh/xmnlab/yammy
 
-.. image:: https://readthedocs.org/projects/pyge/badge/?version=latest
-        :target: https://pyge.readthedocs.io/en/latest/?badge=latest
+.. image:: https://readthedocs.org/projects/yammy/badge/?version=latest
+        :target: https://yammy.readthedocs.io/en/latest/?badge=latest
         :alt: Documentation Status
 
 
@@ -23,7 +23,7 @@ Python Game Engine
 
 
 * Free software: BSD license
-* Documentation: https://pyge.readthedocs.io.
+* Documentation: https://yammy.readthedocs.io.
 
 
 Features

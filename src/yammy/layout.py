@@ -2,8 +2,8 @@ from pathlib import Path
 
 import pygame
 
-from pyge import settings
-from pyge.settings import get_path
+from yammy import settings
+from yammy.settings import get_path
 
 
 class Layout:

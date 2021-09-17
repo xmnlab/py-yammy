@@ -12,7 +12,7 @@ To install Python Game Engine, run this command in your terminal:
 
 .. code-block:: console
 
-    $ pip install pyge
+    $ pip install yammy
 
 This is the preferred method to install Python Game Engine, as it will always install the most recent stable release.
 
@@ -32,13 +32,13 @@ You can either clone the public repository:
 
 .. code-block:: console
 
-    $ git clone git://github.com/xmnlab/pyge
+    $ git clone git://github.com/xmnlab/yammy
 
 Or download the `tarball`_:
 
 .. code-block:: console
 
-    $ curl  -OL https://github.com/xmnlab/pyge/tarball/master
+    $ curl  -OL https://github.com/xmnlab/yammy/tarball/master
 
 Once you have a copy of the source, you can install it with:
 
@@ -47,5 +47,5 @@ Once you have a copy of the source, you can install it with:
     $ python setup.py install
 
 
-.. _Github repo: https://github.com/xmnlab/pyge
-.. _tarball: https://github.com/xmnlab/pyge/tarball/master
+.. _Github repo: https://github.com/xmnlab/yammy
+.. _tarball: https://github.com/xmnlab/yammy/tarball/master

@@ -1,11 +1,11 @@
 import pygame
 
-from pyge import layout
-from pyge.timer import Timer
-from pyge.sound import SoundBoard
-from pyge.layout import Layout
-from pyge.utils import read_config
-from pyge.settings import get_path
+from yammy import layout
+from yammy.timer import Timer
+from yammy.sound import SoundBoard
+from yammy.layout import Layout
+from yammy.utils import read_config
+from yammy.settings import get_path
 
 
 class Scenes:
