@@ -3,41 +3,50 @@ from yammy.settings import get_path
 
 
 class SoundBoard:
-    parent = None
+    game = None
     soundtrack = None
     sound = None
 
-    def __init__(self, parent):
-        self.parent = parent
-        self.soundtrack = SoundTrack(self.parent)
-        self.sound = Sound(self.parent)
+    def __init__(self, game):
+        self.game = game
+        self.soundtrack = SoundTrack(self.game)
+        self.sound = Sound(self.game)
 
     def run(self):
         self.soundtrack.play()
 
 
 class SoundTrack:
-    parent = None
+    game = None
     active = False
 
-    def __init__(self, parent):
-        self.parent = parent
+    def __init__(self, game):
+        self.game = game
 
     def play(self):
         if self.active:
             return
 
         self.active = False
-        if self.parent.scenes_control.current_scene.config.get("soundtrack"):
-            soundtrack_filename = str(
-                get_path("/assets/audios")
-                / self.parent.scenes_control.current_scene.config.get(
-                    "soundtrack"
-                )
-            )
-            pygame.mixer.music.load(soundtrack_filename)
-            self.active = True
-            pygame.mixer.music.play(-1)
+
+        soundtrack = self.game.scenes_controller.current_scene.config.get(
+            "soundtrack"
+        )
+
+        if not soundtrack:
+            self.stop()
+            return
+
+        soundtrack_filename = str(
+            get_path("/assets/audios") / soundtrack["file"]
+        )
+        pygame.mixer.music.load(soundtrack_filename)
+
+        self.active = True
+
+        volume = float(soundtrack.get("volume", 50)) / 100.0
+        pygame.mixer.music.set_volume(volume)
+        pygame.mixer.music.play(-1)
 
     def stop(self):
         if self.active:
@@ -46,10 +55,10 @@ class SoundTrack:
 
 
 class Sound:
-    parent = None
+    game = None
 
-    def __init__(self, parent):
-        self.parent = parent
+    def __init__(self, game):
+        self.game = game
 
     def play(self):
         ...

@@ -5,14 +5,14 @@ from pathlib import Path
 from typing import Optional
 
 import pygame
-from yammy.scene import ScenesControl
+from yammy.scene import ScenesController
 from yammy.settings import get_path
 from yammy.utils import read_config
 
 
 class Yammy:
     config = {}
-    scenes_control: Optional[ScenesControl] = None
+    scenes_controller: Optional[ScenesController] = None
     # pygame screen
     screen = None
     status: str = "active"
@@ -23,7 +23,7 @@ class Yammy:
         self.config = {}
 
         self.config = read_config(get_path("/") / "main.yaml")
-        self.scenes_control = ScenesControl(self)
+        self.scenes_controller = ScenesController(self)
 
         self.clock = pygame.time.Clock()
 
@@ -53,13 +53,16 @@ class Yammy:
         pygame.init()
 
         while self.status == "active":
-            for event in pygame.event.get():
+            for event in self.get_events():
                 if event.type == pygame.QUIT:
                     sys.exit()
-                self.scenes_control.events(event)
+                self.scenes_controller.events(event)
 
-            self.scenes_control.run()
+            self.scenes_controller.play()
 
         pygame.display.quit()
         pygame.quit()
         sys.exit()
+
+    def get_events(self):
+        return pygame.event.get()

@@ -1,6 +1,8 @@
 name: start-screen
 blank: true
-soundtrack: "sound-background.ogg"
+soundtrack: 
+  file: "sound-background.ogg"
+  volume: 25
 background: "sprites/background/start-game.jpg"
 loop: true
 layout:
@@ -17,4 +19,4 @@ layout:
       x: 150  # px
       y: 750  # px
       events:
-        click: scenes.goto("game-play")
+        click: goto("game-play")

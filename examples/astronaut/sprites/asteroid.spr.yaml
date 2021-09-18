@@ -1,4 +1,4 @@
-name: asteroid
+type: asteroid
 animations:
   small:
     fps: 30

@@ -4,11 +4,11 @@ from yammy.settings import get_path
 
 
 class Layout:
-    parent = None
+    game = None
 
-    def __init__(self, parent):
-        self.parent = parent
-        self.background = Background(self.parent)
+    def __init__(self, game):
+        self.game = game
+        self.background = Background(self.game)
         self.elements = {}
         self.element_type = {"button": Button, "text": Text}
 
@@ -16,7 +16,7 @@ class Layout:
         self.elements = {}
 
     def update(self):
-        config = self.parent.scenes_control.current_scene.config
+        config = self.game.scenes_controller.current_scene.config
 
         for item in config.get("layout", {}).get("elements", {}):
             name = item["name"]
@@ -26,30 +26,32 @@ class Layout:
                 continue
 
             self.elements[name] = class_element(item)
-            self.elements[name].show(self.parent.screen)
+            self.elements[name].show(self.game.screen)
+
+            events_trigger = (
+                self.game.scenes_controller.current_scene.events_trigger
+            )
 
             for k, v in item.get("events", {}).items():
-                self.parent.scenes_control.current_scene.events_trigger.append(
-                    getattr(self.elements[name], k)
-                )
+                events_trigger.append(getattr(self.elements[name], k))
 
 
 class Background:
     parent = None
 
     def __init__(self, parent):
-        self.parent = parent
+        self.game = parent
 
     def show(self):
-        if self.parent.scenes_control.current_scene.config.get("background"):
+        if self.game.scenes_controller.current_scene.config.get("background"):
             background_filename = str(
                 get_path("/assets")
-                / self.parent.scenes_control.current_scene.config.get(
+                / self.game.scenes_controller.current_scene.config.get(
                     "background"
                 )
             )
             background_image = pygame.image.load(background_filename).convert()
-            self.parent.screen.blit(background_image, [0, 0])
+            self.game.screen.blit(background_image, [0, 0])
 
 
 class Font:
@@ -105,12 +107,12 @@ class Button:
     def show(self, screen):
         screen.blit(self.surface, (self.x, self.y))
 
-    def click(self, event, parent):
+    def click(self, event, game):
         x, y = pygame.mouse.get_pos()
         if event.type == pygame.MOUSEBUTTONDOWN:
             if pygame.mouse.get_pressed()[0]:
                 if self.rect.collidepoint(x, y):
-                    eval(f'parent.{self.events["click"]}')
+                    eval(f'game.scenes_controller.{self.events["click"]}')
 
 
 class Text:
@@ -140,7 +142,7 @@ class Text:
     def show(self, screen):
         screen.blit(self.surface, (self.x, self.y))
 
-    def click(self, event, parent):
+    def click(self, event, game):
         if "click" not in self.events:
             return
 
@@ -148,4 +150,4 @@ class Text:
         if event.type == pygame.MOUSEBUTTONDOWN:
             if pygame.mouse.get_pressed()[0]:
                 if self.rect.collidepoint(x, y):
-                    eval(f'parent.{self.events["click"]}')
+                    eval(f'game.scenes_controller.{self.events["click"]}')

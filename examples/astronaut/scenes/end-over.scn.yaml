@@ -2,7 +2,7 @@ name: end-over
 blank: false
 soundtrack: null
 loop: false
-time: 5  # s
+time: 2  # s
 next-scene: start-screen
 sprites:
   - name: asteroid

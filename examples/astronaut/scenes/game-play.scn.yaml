@@ -1,6 +1,8 @@
 name: game-play
 blank: true
-soundtrack: null
+soundtrack: 
+  file: "sound-background.ogg"
+  volume: 25
 background: "sprites/background/background-8bits.jpg"
 loop: true
 
@@ -33,6 +35,7 @@ triggers:
 
 sprites:
   - type: astronaut
+    name: astronaut
     variables:
       pos-x:
         type: int

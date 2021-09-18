@@ -1,4 +1,4 @@
-name: astronaut
+type: astronaut
 
 animations:
   front:
@@ -21,7 +21,7 @@ animations:
       - side-1.png
       - side-2.png
 
-variables:
+attributes:
   pos-x:
     type: int
     value: 0
@@ -31,28 +31,31 @@ variables:
   speed:
     type: int
     value: 10
-  position:
+  current:
     type: str
     value: front
 
 methods:
   move-up: |
-    variables["pos-x"] -= 1
-    animations.change("front")
-    animations.flip()
+    sprite.iattr("pos-x", -1)
+    # sprite.animations["current"] = "front"
+    # animations.flip()
   move-down: |
-    lambda: variables["pos-x"] += 1
-    animations.change("back")
-    animations.flip()
+    sprite.iattr("pos-x", +1)
+    # sprite.animations["current"] = "back"
+    # animations.flip()
   move-left: |
-    lambda: variables["pos-y"] += 1
-    animations.change("side")
-    animations.flip()
+    sprite.iattr("pos-y", -1)
+    # sprite.animations["current"] = "side"
+    # animations.flip()
   move-right: |
-    lambda: variables["pos-x"] -= 1
-    animations.change("side")
-key-map:
-  arrow-up: methods["move-up"]
-  arrow-down: methods["move-down"]
-  arrow-left: methods["move-left"]
-  arrow-right: methods["move-right"]
+    sprite.iattr("pos-y", +1)
+    # animations["current"] = "side"
+
+events:
+  controllers:
+    keyboard:
+      ARROW-UP: sprite.methods["move-up"]
+      ARROW-DOWN: sprite.methods["move-down"]
+      ARROW-LEFT: sprite.methods["move-left"]
+      ARROW-RIGHT: sprite.methods["move-right"]
