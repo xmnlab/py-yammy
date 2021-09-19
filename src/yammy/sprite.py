@@ -71,9 +71,7 @@ class Sprite:
         self.load_events()
 
     def iattr(self, attr, i):
-        print(attr, i, end=":")
         self.attributes[attr] += i
-        print(self.attributes[attr])
 
     def load_attributes(self):
         self.attributes = {}
@@ -136,4 +134,3 @@ class Sprite:
         )
         sprite_image = pygame.image.load(sprite_filename).convert()
         screen.blit(sprite_image, [pos_x, pos_y])
-        print([pos_x, pos_y])

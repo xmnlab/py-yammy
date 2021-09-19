@@ -1,6 +1,6 @@
-==================
-Python Game Engine
-==================
+=================
+Yammy Game Engine
+=================
 
 
 .. image:: https://img.shields.io/pypi/v/yammy.svg
@@ -19,11 +19,12 @@ Python Game Engine
 
 
 
-Python Game Engine
+Yammy Game Engine
 
 
 * Free software: BSD license
 * Documentation: https://yammy.readthedocs.io.
+* It is still a prototype
 
 
 Features
@@ -31,11 +32,27 @@ Features
 
 * TODO
 
-Credits
--------
+Development
+-----------
 
-This package was created with Cookiecutter_ and the `pyOpenSci/cookiecutter-pyopensci`_ project template, based off `audreyr/cookiecutter-pypackage`_.
+**Installation**
 
-.. _Cookiecutter: https://github.com/audreyr/cookiecutter
-.. _`pyOpenSci/cookiecutter-pyopensci`: https://github.com/pyOpenSci/cookiecutter-pyopensci
-.. _`audreyr/cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
+.. code-block:: bash
+
+   $ conda env create --file environment-dev.yaml
+   $ conda activate yammy-dev
+   $ pip install -e .
+
+
+Examples
+--------
+
+**Astronaut**
+
+.. code-block:: bash
+
+   $ cd examples/astronaut
+   $ python main.py
+
+In the Start screen, click on the "START GAME" button and the game will start.
+For now, it just allows keyboard movements with the key-arrows.
