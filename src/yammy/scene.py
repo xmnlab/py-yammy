@@ -49,9 +49,9 @@ class ScenesController:
         self.game.clock.tick(self.game.config.get("clock-tick-rate"))
 
     def events(self, event):
-        for e in self.current_scene.events_trigger:
+        for ev in self.current_scene.events_trigger:
             try:
-                e(event, self.game)
+                ev(event, self.game)
             except Exception as e:
                 import pdb
 

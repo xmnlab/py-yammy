@@ -28,12 +28,11 @@ class Keyboard(Input):
         self.callbacks = callbacks
 
     def events(self, event, game):
-        for event_name, event_func in game.get_events().items():
-            if event.type == TYPE_KEYDOWN:
-                event_map = self.key_map.get(event.key)
-                if not event_map:
-                    continue
+        if event.type == TYPE_KEYDOWN:
+            event_map = self.key_map.get(event.key)
+            if not event_map:
+                return
 
-                callback = self.callbacks.get(event_map)
-                if callback:
-                    callback(self.sprite)
+            callback = self.callbacks.get(event_map)
+            if callback:
+                callback(self.sprite)

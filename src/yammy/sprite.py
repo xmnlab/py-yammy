@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import copy
 import glob
+from functools import partial
 from typing import Callable, Dict, List
 
 import pygame
@@ -70,7 +71,9 @@ class Sprite:
         self.load_events()
 
     def iattr(self, attr, i):
+        print(attr, i, end=":")
         self.attributes[attr] += i
+        print(self.attributes[attr])
 
     def load_attributes(self):
         self.attributes = {}
@@ -84,15 +87,22 @@ class Sprite:
             self.attributes[m_name] = m_attr["value"]
 
     def load_methods(self):
-        self.methods = {}
-
         config_methods = self.config.get("methods")
 
         if not config_methods:
             return
 
         for m_name, m_func in config_methods.items():
-            self.methods[m_name] = eval(f"lambda sprite: {m_func}")
+
+            method = f"def {m_name}(self):\n"
+            for code in m_func.split("\n"):
+                if "#" in code:
+                    code = code[: code.index("#")]
+                code = code.strip()
+                if code:
+                    method += f"    {code}\n"
+            exec(method)
+            setattr(self, m_name, partial(locals()[m_name], self))
 
     def load_events(self):
         self.events = []
@@ -108,12 +118,7 @@ class Sprite:
                 lambda_events = {}
 
                 for k_event, event in events.items():
-                    import pdb
-
-                    pdb.set_trace()
-                    lambda_events[k_event] = eval(
-                        f"lambda sprite: lambda: event, game: {event})"
-                    )(self)
+                    lambda_events[k_event] = eval(f"lambda sprite: {event}()")
 
                 self.events.append(Keyboard(self, lambda_events).events)
 
@@ -123,8 +128,8 @@ class Sprite:
         animation = self.config["animations"][current]
         image = animation["images"][0]
 
-        pos_x = attributes["pos-x"]["value"]
-        pos_y = attributes["pos-y"]["value"]
+        pos_x = self.attributes["pos-x"]
+        pos_y = self.attributes["pos-y"]
 
         sprite_filename = str(
             get_path("/assets/sprites") / self.config["type"] / image

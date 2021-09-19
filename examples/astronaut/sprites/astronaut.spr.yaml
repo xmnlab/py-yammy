@@ -36,26 +36,26 @@ attributes:
     value: front
 
 methods:
-  move-up: |
-    sprite.iattr("pos-x", -1)
-    # sprite.animations["current"] = "front"
+  move_up: |
+    self.iattr("pos-y", -10)
+    # self.animations["current"] = "front"
     # animations.flip()
-  move-down: |
-    sprite.iattr("pos-x", +1)
-    # sprite.animations["current"] = "back"
+  move_down: |
+    self.iattr("pos-y", +10)
+    # self.animations["current"] = "back"
     # animations.flip()
-  move-left: |
-    sprite.iattr("pos-y", -1)
-    # sprite.animations["current"] = "side"
-    # animations.flip()
-  move-right: |
-    sprite.iattr("pos-y", +1)
-    # animations["current"] = "side"
+  move_left: |
+    self.iattr("pos-x", -10)
+    # self.animations["current"] = "side"
+    # self.animations.flip()
+  move_right: |
+    self.iattr("pos-x", +10)
+    # self.animations["current"] = "side"
 
 events:
   controllers:
     keyboard:
-      ARROW-UP: sprite.methods["move-up"]
-      ARROW-DOWN: sprite.methods["move-down"]
-      ARROW-LEFT: sprite.methods["move-left"]
-      ARROW-RIGHT: sprite.methods["move-right"]
+      ARROW-UP: sprite.move_up
+      ARROW-DOWN: sprite.move_down
+      ARROW-LEFT: sprite.move_left
+      ARROW-RIGHT: sprite.move_right
