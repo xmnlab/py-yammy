@@ -22,7 +22,7 @@ class Yammy:
 
         self.config = {}
 
-        self.config = read_config(get_path("/") / "main.yaml")
+        self.config = read_config(get_path("/", "main.yaml"))
         self.scenes_controller = ScenesController(self)
 
         self.clock = pygame.time.Clock()
@@ -38,7 +38,7 @@ class Yammy:
         self.screen = pygame.display.set_mode(layout_size)
 
         # TODO: set a default image
-        icon_filename = str(get_path("/assets/images") / layout.get("icon"))
+        icon_filename = str(get_path("/assets/images", layout.get("icon")))
         icon_image = pygame.image.load(icon_filename)
 
         pygame.display.set_icon(icon_image)

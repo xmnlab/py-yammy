@@ -9,7 +9,7 @@ class Timer:
 
     def __init__(self, scene):
         self.scene = scene
-        self.clock_tick_rate = read_config(get_path("/") / "main.yaml")[
+        self.clock_tick_rate = read_config(get_path("/", "main.yaml"))[
             "clock-tick-rate"
         ]
         self.counter = None

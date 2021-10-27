@@ -38,7 +38,7 @@ class SoundTrack:
             return
 
         soundtrack_filename = str(
-            get_path("/assets/audios") / soundtrack["file"]
+            get_path("/assets/audios", soundtrack["file"])
         )
         pygame.mixer.music.load(soundtrack_filename)
 

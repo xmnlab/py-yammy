@@ -45,9 +45,11 @@ class Background:
     def show(self):
         if self.game.scenes_controller.current_scene.config.get("background"):
             background_filename = str(
-                get_path("/assets")
-                / self.game.scenes_controller.current_scene.config.get(
-                    "background"
+                get_path(
+                    "/assets",
+                    self.game.scenes_controller.current_scene.config.get(
+                        "background"
+                    ),
                 )
             )
             background_image = pygame.image.load(background_filename).convert()
@@ -68,7 +70,7 @@ class Font:
         if style.get("font-source"):
             font_class = pygame.font.Font
             font_source = str(
-                settings.get_path("/assets/fonts") / style["font-source"]
+                settings.get_path("/assets/fonts", style["font-source"])
             )
         elif style.get("font-family"):
             font_class = pygame.font.SysFont
