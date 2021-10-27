@@ -23,7 +23,7 @@ class ScenesController:
         self.game = game
         self.new(self.game.config["initial-scene"])
 
-        for filepath in glob.glob(str(get_path("/scenes") / "*.scn.yaml")):
+        for filepath in glob.glob(str(get_path("/scenes", "*.scn.yaml"))):
             name = filepath.split(os.sep)[-1].replace(".scn.yaml", "")
             self.config[name] = read_config(filepath)
 
@@ -73,7 +73,7 @@ class Scene:
 
         self.current_name = name
 
-        filepath = get_path("/scenes") / f"{name}.scn.yaml"
+        filepath = get_path("/scenes", f"{name}.scn.yaml")
         self.config = read_config(filepath)
         self.sprites = SpritesController(self.config.get("sprites"))
 

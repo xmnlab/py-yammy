@@ -31,7 +31,7 @@ class SpritesController:
         sprites = []
 
         # load just the sprites needed
-        for f in glob.glob(str(get_path("/sprites") / "*.spr.yaml")):
+        for f in glob.glob(str(get_path("/sprites", "*.spr.yaml"))):
             sprite = read_config(f)
             if sprite["type"] in sprites_type:
                 sprites_definition[sprite["type"]] = sprite
@@ -130,7 +130,7 @@ class Sprite:
         pos_y = self.attributes["pos-y"]
 
         sprite_filename = str(
-            get_path("/assets/sprites") / self.config["type"] / image
+            get_path("/assets/sprites", f'{self.config["type"]}/{image}')
         )
         sprite_image = pygame.image.load(sprite_filename).convert()
         screen.blit(sprite_image, [pos_x, pos_y])
